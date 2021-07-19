@@ -1,14 +1,15 @@
 <template>
   <div class="container">
-    <ListSort />
-    <ListItem />
+    <ListSort class="sortMenu" />
+    <ListItem class="items" />
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
-import ListItem from "@/components/body/ListItem.vue";
-import ListSort from "@/components/body/ListSort.vue";
+import { Component, Vue } from 'vue-property-decorator'
+import ListItem from '@/components/body/ListItem.vue'
+import ListSort from '@/components/body/ListSort.vue'
+
 @Component({
   components: {
     ListItem,
