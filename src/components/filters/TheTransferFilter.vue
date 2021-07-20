@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="filter-container">
     <h2 class="filter-header">Количество пересадок</h2>
     <div
       class="choice-item"
@@ -32,12 +32,12 @@ export default class TheTransferFilter extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.container,
+.filter-container,
 .choice-item {
   display: flex;
 }
 
-.container {
+.filter-container {
   flex-wrap: wrap;
   width: 232px;
   height: 252px;
@@ -82,7 +82,7 @@ export default class TheTransferFilter extends Vue {
 .item-input:checked ~ .checkmark:after {
   display: block;
 }
-.container .checkmark:after {
+.filter-container .checkmark:after {
   left: 6px;
   top: 2px;
   width: 5px;

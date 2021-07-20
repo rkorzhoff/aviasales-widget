@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="main-container">
     <TheTransferFilter class="filter" />
-    <ListBody />
+    <ListBody class="list" />
   </div>
 </template>
 
@@ -19,10 +19,13 @@ import ListBody from '@/components/body/ListBody.vue'
 export default class Main extends Vue {}
 </script>
 <style lang="scss" scoped>
-.container {
+.main-container {
   display: flex;
 }
 .filter {
   margin-right: 20px;
+}
+.list {
+  width: 550px;
 }
 </style>

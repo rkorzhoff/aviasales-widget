@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="sort-container">
     <div
       class="option-wrapper"
       v-for="option in sortTypes"
@@ -22,8 +22,10 @@ export default class ListSort extends Vue {
 }
 </script>
 <style lang="scss" scoped>
-.container {
+.sort-container {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   height: 50px;
   border: 1px solid #dfe5ec;
   background-color: #fff;
