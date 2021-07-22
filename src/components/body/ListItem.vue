@@ -1,50 +1,54 @@
 <template>
   <div class="item-container">
     <div class="item-container-header">
-      <span class="price">{{ flight.price }}</span>
+      <span class="price">{{ formatPrice(flight.price) }} &#8381;</span>
       <img src="~@/assets/img/company-logo.svg" alt="company-logo" />
     </div>
     <div class="item-container-body">
-      <div class="body-item">
-        <span class="item-top"
-          >{{ flight.firstTicket.departureCity }} -
-          {{ flight.firstTicket.arrivalCity }}</span
-        >
-        <span class="item-bottom"
-          >{{ flight.firstTicket.departureTime }} -
-          {{ flight.firstTicket.arrivalTime }}</span
-        >
+      <div class="ticket-wrapper">
+        <div class="body-item">
+          <span class="item-top"
+            >{{ flight.firstTicket.departureCity }} -
+            {{ flight.firstTicket.arrivalCity }}</span
+          >
+          <span class="item-bottom"
+            >{{ flight.firstTicket.departureTime }} -
+            {{ flight.firstTicket.arrivalTime }}</span
+          >
+        </div>
+        <div class="body-item">
+          <span class="item-top">В ПУТИ</span>
+          <span class="item-bottom">{{ firstFlightTime }}</span>
+        </div>
+        <div class="body-item">
+          <span class="item-top">{{ firstTransfer }}</span>
+          <span class="item-bottom"
+            >{{ flight.firstTicket.transferPoints.toString() }}
+          </span>
+        </div>
       </div>
-      <div class="body-item">
-        <span class="item-top">В ПУТИ</span>
-        <span class="item-bottom">{{ firstFlightTime }}</span>
-      </div>
-      <div class="body-item">
-        <span class="item-top">{{ firstTransfer }}</span>
-        <span class="item-bottom"
-          >{{ flight.firstTicket.transferPoints.toString() }}
-        </span>
-      </div>
+      <div class="ticket-wrapper">
+        <div class="body-item">
+          <span class="item-top"
+            >{{ flight.secondTicket.departureCity }} -
+            {{ flight.secondTicket.arrivalCity }}</span
+          >
+          <span class="item-bottom"
+            >{{ flight.secondTicket.departureTime }} -
+            {{ flight.secondTicket.arrivalTime }}</span
+          >
+        </div>
 
-      <div class="body-item">
-        <span class="item-top"
-          >{{ flight.secondTicket.departureCity }} -
-          {{ flight.secondTicket.arrivalCity }}</span
-        >
-        <span class="item-bottom"
-          >{{ flight.secondTicket.departureTime }} -
-          {{ flight.secondTicket.arrivalTime }}</span
-        >
-      </div>
-      <div class="body-item">
-        <span class="item-top">В ПУТИ</span>
-        <span class="item-bottom">{{ secondFlightTime }}</span>
-      </div>
-      <div class="body-item">
-        <span class="item-top">{{ secondTransfer }}</span>
-        <span class="item-bottom"
-          >{{ flight.secondTicket.transferPoints.toString() }}
-        </span>
+        <div class="body-item">
+          <span class="item-top">В ПУТИ</span>
+          <span class="item-bottom">{{ secondFlightTime }}</span>
+        </div>
+        <div class="body-item">
+          <span class="item-top">{{ secondTransfer }}</span>
+          <span class="item-bottom"
+            >{{ flight.secondTicket.transferPoints.toString() }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -56,7 +60,7 @@ import Flight from '@/mock/types'
 import CalculateFlightTime from '@/usecases/CalculateFlightTime'
 @Component
 export default class ListItem extends Vue {
-  @Prop() readonly flight: Flight
+  @Prop() readonly flight!: Flight
   firstFlightTime = ''
   secondFlightTime = ''
   firstNumberOfTransfers = 0
@@ -74,7 +78,10 @@ export default class ListItem extends Vue {
       this.flight.secondTicket.departureTime
     )
   }
-  declOfNum(num: number, words: string): string {
+  formatPrice(price: number): string {
+    return price.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1 ')
+  }
+  declOfNum(num: number, words: Array<string>): string {
     return words[
       num % 100 > 4 && num % 100 < 20
         ? 2
@@ -109,10 +116,22 @@ export default class ListItem extends Vue {
 .item-container-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  color: #2196f3;
+  font-weight: 600;
+  font-size: 24px;
 }
 .item-container-body {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+}
+.ticket-wrapper {
+  display: grid;
+  grid-template-columns: 250px 150px 200px;
+}
+.ticket-wrapper:first-child {
+  margin-bottom: 20px;
 }
 .body-item {
   display: flex;
@@ -121,7 +140,7 @@ export default class ListItem extends Vue {
   align-items: flex-start;
   font-size: 14px;
 }
-.body-item:not(:last-child) {
-  margin-right: 80px;
-}
+//.body-item:nth-child(2) {
+//  align-items: center;
+//}
 </style>

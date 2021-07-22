@@ -12,6 +12,7 @@
           type="checkbox"
           :name="filter.choiceId"
           :id="filter.choiceId"
+          @change="onFilterSet"
           class="item-input"
         />
         <span class="checkmark"></span>
@@ -21,13 +22,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop, VModel } from 'vue-property-decorator'
 
 import filters from '@/components/filters/filters'
 
 @Component
 export default class TheTransferFilter extends Vue {
+  @Prop() setTransferFilter!: void
+  @VModel() numberOfTransfers!: string
   transferFilters: Array<{ choiceId: string; choiceLabel: string }> = filters
+  onFilterSet(e: any): void {
+    if (e.target.id === 'choice-none') {
+      this.numberOfTransfers = 'none'
+    } else if (e.target.id === 'choice-all') {
+      this.numberOfTransfers = 'all'
+    } else if (e.target.id === 'choice-one') {
+      this.numberOfTransfers = 'one'
+    } else if (e.target.id === 'choice-two') {
+      this.numberOfTransfers = 'two'
+    } else if (e.target.id === 'choice-three') {
+      this.numberOfTransfers = 'three'
+    }
+  }
 }
 </script>
 

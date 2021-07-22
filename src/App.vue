@@ -20,8 +20,6 @@
   flex-direction: column;
   align-items: center;
   background-color: #f3f7fa;
-  width: 100vw;
-  height: 100vh;
 }
 .logo {
   margin: 50px auto;

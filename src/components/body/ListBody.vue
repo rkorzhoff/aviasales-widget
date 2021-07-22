@@ -3,18 +3,17 @@
     <ListSort class="sortMenu" />
     <ListItem
       class="item"
-      v-for="(flight, index) of listOfFlights"
+      v-for="flight of listOfFlights"
       :flight="flight"
-      :key="index"
+      :key="flight.price"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, InjectReactive, Vue } from 'vue-property-decorator'
 import ListItem from '@/components/body/ListItem.vue'
 import ListSort from '@/components/body/ListSort.vue'
-import flights from '@/mock/fligths'
 import Flight from '@/mock/types'
 
 @Component({
@@ -24,7 +23,7 @@ import Flight from '@/mock/types'
   },
 })
 export default class ListBody extends Vue {
-  listOfFlights: Array<Flight> = flights
+  @InjectReactive() listOfFlights!: Array<Flight>
 }
 </script>
 <style lang="scss" scoped>
@@ -35,7 +34,7 @@ export default class ListBody extends Vue {
 .item {
   background-color: #fff;
   margin: 20px 0;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
 </style>
