@@ -19,7 +19,7 @@ git commit -m 'deploy'
 # если вы публикуете по адресу https://<USERNAME>.github.io
 # git push -f git@github.com:rkorzhoff/rkorzhoff.github.io.git master
 
-# если вы публикуете по адресу https://<USERNAME>.github.io/aviasales-widget
+# если вы публикуете по адресу https://<USERNAME>.github.io/<REPO>
  git push -f git@github.com:rkorzhoff/aviasales-widget.git master:gh-pages
 
 cd -
