@@ -1,6 +1,5 @@
 module.exports = {
-  publicPath:
-    process.env.NODE_ENV === 'production' ? '/aviasales-widget/' : '/',
+  publicPath: '/aviasales-widget/',
   productionSourceMap: false,
   configureWebpack: {
     performance: {
