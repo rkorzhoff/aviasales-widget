@@ -2,18 +2,20 @@
   <div class="filter-container">
     <h2 class="filter-header">Количество пересадок</h2>
     <div
-      class="choice-item"
-      v-for="filter in transferFilters"
+      v-for="filter in transfersFilters"
       :key="filter.choiceId"
+      class="choice-item"
     >
       <label :for="filter.choiceId" class="item-label"
         >{{ filter.choiceLabel }}
         <input
-          type="checkbox"
-          :name="filter.choiceId"
           :id="filter.choiceId"
-          @change="onFilterSet"
+          :checked="checkVal(filter.choiceId)"
+          :name="filter.choiceId"
+          :value="filter.choiceId"
           class="item-input"
+          type="checkbox"
+          @change="onFilterSet"
         />
         <span class="checkmark"></span>
       </label>
@@ -22,26 +24,39 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, VModel } from 'vue-property-decorator'
+import { Component, VModel, Vue } from 'vue-property-decorator'
 
 import filters from '@/components/filters/filters'
 
 @Component
 export default class TheTransferFilter extends Vue {
-  @Prop() setTransferFilter!: void
-  @VModel() numberOfTransfers!: string
-  transferFilters: Array<{ choiceId: string; choiceLabel: string }> = filters
+  @VModel() computedFilters!: Array<string>
+  transfersFilters: Array<{ choiceId: string; choiceLabel: string }> = filters
+
+  checkVal(val: string): boolean {
+    if (val === 'choice-all') {
+      return this.computedFilters.length === 4
+    }
+    return this.computedFilters.includes(val)
+  }
+
   onFilterSet(e: any): void {
-    if (e.target.id === 'choice-none') {
-      this.numberOfTransfers = 'none'
-    } else if (e.target.id === 'choice-all') {
-      this.numberOfTransfers = 'all'
-    } else if (e.target.id === 'choice-one') {
-      this.numberOfTransfers = 'one'
-    } else if (e.target.id === 'choice-two') {
-      this.numberOfTransfers = 'two'
-    } else if (e.target.id === 'choice-three') {
-      this.numberOfTransfers = 'three'
+    if (e.target.id === 'choice-all') {
+      this.computedFilters.length = 0
+      this.transfersFilters.forEach(
+        (filter: { choiceId: string; choiceLabel: string }) => {
+          if (filter.choiceId !== 'choice-all') {
+            this.computedFilters.push(filter.choiceId)
+          }
+        }
+      )
+    } else {
+      this.computedFilters.includes(e.target.id)
+        ? this.computedFilters.splice(
+            this.computedFilters.indexOf(e.target.id),
+            1
+          )
+        : this.computedFilters.push(e.target.id)
     }
   }
 }
@@ -67,6 +82,7 @@ export default class TheTransferFilter extends Vue {
   width: 100%;
   position: relative;
 }
+
 .item-input {
   position: absolute;
   opacity: 0;
@@ -74,6 +90,7 @@ export default class TheTransferFilter extends Vue {
   height: 0;
   width: 0;
 }
+
 .checkmark {
   cursor: pointer;
   position: absolute;
@@ -84,20 +101,25 @@ export default class TheTransferFilter extends Vue {
   border: 1px solid #9abbce;
   border-radius: 2px;
 }
+
 .item-input:hover ~ .checkmark {
   border: 1px solid #2196f3;
 }
+
 .item-input:checked ~ .checkmark {
   border: 1px solid #2196f3;
 }
+
 .checkmark:after {
   content: '';
   position: absolute;
   display: none;
 }
+
 .item-input:checked ~ .checkmark:after {
   display: block;
 }
+
 .filter-container .checkmark:after {
   left: 6px;
   top: 2px;
@@ -109,6 +131,7 @@ export default class TheTransferFilter extends Vue {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
 .filter-header {
   font-style: normal;
   text-transform: uppercase;
@@ -117,6 +140,7 @@ export default class TheTransferFilter extends Vue {
   line-height: 12px;
   letter-spacing: 0.5px;
 }
+
 .item-label {
   cursor: pointer;
   font-style: normal;

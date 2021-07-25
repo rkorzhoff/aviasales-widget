@@ -195,14 +195,14 @@ const flights: Array<Flight> = [
       arrivalCity: 'Brazos',
       departureTime: '0:1',
       arrivalTime: '10:40',
-      transferPoints: ['Rosedale', ' Golconda'],
+      transferPoints: [],
     },
     secondTicket: {
       departureCity: 'Choctaw',
       arrivalCity: 'Shawmut',
       departureTime: '9:5',
       arrivalTime: '22:48',
-      transferPoints: ['Ona', ' Boykin'],
+      transferPoints: [],
     },
   },
   {

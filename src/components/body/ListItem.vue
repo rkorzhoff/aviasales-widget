@@ -2,7 +2,7 @@
   <div class="item-container">
     <div class="item-container-header">
       <span class="price">{{ formatPrice(flight.price) }} &#8381;</span>
-      <img src="~@/assets/img/company-logo.svg" alt="company-logo" />
+      <img alt="company-logo" src="~@/assets/img/company-logo.svg" />
     </div>
     <div class="item-container-body">
       <div class="ticket-wrapper">
@@ -55,9 +55,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import Flight from '@/mock/types'
 import CalculateFlightTime from '@/usecases/CalculateFlightTime'
+
 @Component
 export default class ListItem extends Vue {
   @Prop() readonly flight!: Flight
@@ -68,6 +69,7 @@ export default class ListItem extends Vue {
   firstTransfer = ''
   secondTransfer = ''
   transferDecl = ['пересадка', 'пересадки', 'пересадок']
+
   calculateFlightTime(): void {
     this.firstFlightTime = CalculateFlightTime.calculateTime(
       this.flight.firstTicket.arrivalTime,
@@ -78,9 +80,11 @@ export default class ListItem extends Vue {
       this.flight.secondTicket.departureTime
     )
   }
+
   formatPrice(price: number): string {
     return price.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1 ')
   }
+
   declOfNum(num: number, words: Array<string>): string {
     return words[
       num % 100 > 4 && num % 100 < 20
@@ -88,6 +92,7 @@ export default class ListItem extends Vue {
         : [2, 0, 1, 1, 1, 2][num % 10 < 5 ? Math.abs(num) % 10 : 5]
     ]
   }
+
   getNumberOfTransfers(): void {
     this.firstNumberOfTransfers = this.flight.firstTicket.transferPoints.length
     this.secondNumberOfTransfers =
@@ -101,6 +106,7 @@ export default class ListItem extends Vue {
       this.transferDecl
     )}`
   }
+
   created(): void {
     this.calculateFlightTime()
     this.getNumberOfTransfers()
@@ -113,6 +119,7 @@ export default class ListItem extends Vue {
   flex-direction: column;
   padding: 26px 20px;
 }
+
 .item-container-header {
   display: flex;
   justify-content: space-between;
@@ -122,17 +129,21 @@ export default class ListItem extends Vue {
   font-weight: 600;
   font-size: 24px;
 }
+
 .item-container-body {
   display: flex;
   flex-direction: column;
 }
+
 .ticket-wrapper {
   display: grid;
   grid-template-columns: 250px 150px 200px;
 }
+
 .ticket-wrapper:first-child {
   margin-bottom: 20px;
 }
+
 .body-item {
   display: flex;
   flex-direction: column;
@@ -140,6 +151,7 @@ export default class ListItem extends Vue {
   align-items: flex-start;
   font-size: 14px;
 }
+
 //.body-item:nth-child(2) {
 //  align-items: center;
 //}

@@ -16,4 +16,5 @@ class CalculateFlightTime {
     return `${hh}:${mm}`
   }
 }
+
 export default new CalculateFlightTime()

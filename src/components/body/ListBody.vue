@@ -1,11 +1,11 @@
 <template>
   <div class="list-container">
-    <ListSort class="sortMenu" />
+    <!--    <ListSort class="sort-menu" />-->
     <ListItem
-      class="item"
       v-for="flight of listOfFlights"
-      :flight="flight"
       :key="flight.price"
+      :flight="flight"
+      class="item"
     />
   </div>
 </template>
@@ -31,10 +31,15 @@ export default class ListBody extends Vue {
   display: flex;
   flex-direction: column;
 }
+
 .item {
   background-color: #fff;
-  margin: 20px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+}
+
+.sort-menu,
+.list-container {
+  margin-bottom: 20px;
 }
 </style>
